@@ -12,6 +12,7 @@ format: ## sort imports and paint it black
 	# in the current directory it does not get black formatted
 	isort -rc .
 	black .
+	flake8
 
 install-deps: ## install python requirements
 	# Install the dev requirements
