@@ -12,11 +12,16 @@ cfgv==3.2.0               # via pre-commit
 click==7.1.2              # via black, pip-tools
 distlib==0.3.1            # via virtualenv
 filelock==3.0.12          # via virtualenv
+flake8==3.8.4             # via -r deps/dev-requirements.in
 identify==1.5.10          # via pre-commit
 isort==4.3.21             # via -r deps/dev-requirements.in
+loguru==0.5.3             # via -r deps/requirements.txt
+mccabe==0.6.1             # via flake8
 nodeenv==1.5.0            # via pre-commit
 pip-tools==4.5.1          # via -r deps/dev-requirements.in
 pre-commit==1.21.0        # via -r deps/dev-requirements.in
+pycodestyle==2.6.0        # via flake8
+pyflakes==2.2.0           # via flake8
 pyyaml==5.3.1             # via aspy.yaml, pre-commit
 six==1.15.0               # via pip-tools, pre-commit, virtualenv
 toml==0.10.2              # via black, pre-commit
