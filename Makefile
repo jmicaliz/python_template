@@ -8,27 +8,23 @@ help: ## generate make help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 format: ## sort imports and paint it black
-	# Limit to these directories so that if there is a virtualenv
-	# in the current directory it does not get black formatted
-	isort -rc .
-	black .
-	flake8
+	isort --settings pyproject.toml .
+	black --config pyproject.toml .
+	flake8 --config .flake8 src/
+
+lock: # Creates poetry.lock file
+	poetry cache clear --all . -n
+	poetry lock --no-update -vvv
+
+update: # Updates poetry.lock file with up-to-date dependencies
+	poetry cache clear --all . -n
+	poetry update -vvv
 
 install-deps: ## install python requirements
-	# Install the dev requirements
-	pip install -r deps/dev-requirements.txt
-
-	# Ensure only the dev requirements are installed
-	pip-sync deps/dev-requirements.txt
-
-	# For local package use: pip install -e .[dev]	
+	poetry install --remove-untracked -vv
 
 init: install-deps ## initialize project with dependencies and pre-commit hooks
-	pre-commit install -t pre-push
-
-requirements: ## create the requirement files
-	pip-compile -o deps/requirements.txt deps/requirements.in
-	pip-compile -o deps/dev-requirements.txt deps/requirements.txt deps/dev-requirements.in
+	pre-commit install
 
 validate:  ## run pre-commit validation
 	pre-commit run --all-files
